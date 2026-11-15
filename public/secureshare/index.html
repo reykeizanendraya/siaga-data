@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAGA DATA - Secure Share</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div id="app-page" class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <i class="ph ph-shield-check"></i>
+                <span>SIAGA DATA</span>
+            </div>
+            <nav class="sidebar__nav">
+                <a class='sidebar__link' href='/dashboard/'>
+                    <i class="ph ph-house"></i> Beranda
+                </a>
+                <a class='sidebar__link' href='/dokumen/'>
+                    <i class="ph ph-folder"></i> Dokumen Saya
+                </a>
+                <a class='sidebar__link sidebar__link--active' href='/secureshare/'>
+                    <i class="ph ph-share-network"></i> Secure Share
+                </a>
+                <a class='sidebar__link' href='/notifikasi/'>
+                    <i class="ph ph-bell"></i> Notifikasi
+                </a>
+                <a class='sidebar__link' href='/riwayat/'>
+                    <i class="ph ph-clock-counter-clockwise"></i> Riwayat Akses
+                </a>
+                <a class='sidebar__link' href='/helpdesk/'>
+                    <i class="ph ph-headset"></i> Helpdesk
+                </a>
+                <div class="sidebar__divider"></div>
+                <a class='sidebar__link' href='/pengaturan/'>
+                    <i class="ph ph-gear"></i> Pengaturan
+                </a>
+                <a class='sidebar__link' href='/profil/'>
+                    <i class="ph ph-user"></i> Akun
+                </a>
+            </nav>
+            <div class="sidebar__footer">
+                <button class="btn btn--danger btn--full" onclick="window.location.href='../index.html'">
+                    <i class="ph ph-sign-out"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="main-header__title">
+                    <h2 id="page-title">Secure Share</h2>
+                </div>
+                <div class="main-header__user">
+                    <button class="btn-icon"><i class="ph ph-bell"></i></button>
+                    <div class="avatar" id="user-avatar-initial">C</div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <section id="panel-secureshare" class="panel panel--active">
+                    <div class="stepper">
+                        <div class="stepper__step stepper__step--active" id="step-1-indicator">
+                            <div class="stepper__circle">1</div>
+                            <span>Pilih Dokumen</span>
+                        </div>
+                        <div class="stepper__line"></div>
+                        <div class="stepper__step" id="step-2-indicator">
+                            <div class="stepper__circle">2</div>
+                            <span>Tujuan & Waktu</span>
+                        </div>
+                        <div class="stepper__line"></div>
+                        <div class="stepper__step" id="step-3-indicator">
+                            <div class="stepper__circle">3</div>
+                            <span>Konfirmasi</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 1 -->
+                    <div id="share-step-1" class="share-step share-step--active">
+                        <h4 class="section-title">Pilih Dokumen</h4>
+                        <p class="text-muted">Dokumen mana yang ingin kamu bagikan?</p>
+                        <div class="document-select-list" id="share-doc-list">
+                            <!-- Rendered via JS -->
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn--primary" onclick="app.nextShareStep(2)">Lanjut</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div id="share-step-2" class="share-step">
+                        <div class="share-recipient__head">
+                            <div>
+                                <h4 class="section-title" style="margin-bottom:0.25rem;">Bagikan kepada</h4>
+                                <p class="text-muted">Pilih penerima berdasarkan kategori instansi, atau isi sendiri di kolom "Lainnya".</p>
+                            </div>
+                            <div class="form__input-wrapper share-recipient__search">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="text" class="form__input" placeholder="Cari instansi..." id="share-recipient-search">
+                            </div>
+                        </div>
+                        <input type="hidden" id="share-target">
+                        <div class="recipient-grid" id="share-recipient-grid">
+                            <!-- Rendered via JS -->
+                        </div>
+                        <div class="alert alert--success share-recipient__summary" id="share-recipient-summary" style="display:none;"></div>
+
+                        <div class="share-meta-grid mt-4">
+                            <div class="share-meta-card">
+                                <h5><i class="ph ph-target"></i> Tujuan Penggunaan</h5>
+                                <select id="share-purpose" class="form__input form__input--plain">
+                                    <option value="">-- Pilih tujuan --</option>
+                                    <option>Pendaftaran Sekolah / Kuliah</option>
+                                    <option>Pendaftaran Beasiswa</option>
+                                    <option>Lamaran Pekerjaan</option>
+                                    <option>Layanan Perbankan</option>
+                                    <option>Layanan Kesehatan / BPJS</option>
+                                    <option>Pengajuan Bantuan Sosial</option>
+                                    <option>Administrasi Kependudukan</option>
+                                    <option>Lainnya</option>
+                                </select>
+                                <input type="text" id="share-purpose-custom" class="form__input form__input--plain mt-3" maxlength="120" placeholder="Tuliskan tujuan lainnya" style="display:none;">
+                            </div>
+                            <div class="share-meta-card">
+                                <h5><i class="ph ph-clock"></i> Masa Akses</h5>
+                                <div class="alert alert--info" style="margin:0"><i class="ph ph-clock"></i><span>Akses dokumen berlaku 5 menit setelah dibagikan. Anda menerima email saat dokumen dibagikan dan dibuka.</span></div>
+                            </div>
+                        </div>
+                        <div class="form-actions row">
+                            <button class="btn btn--outline" onclick="app.nextShareStep(1)">Kembali</button>
+                            <button class="btn btn--primary" onclick="app.nextShareStep(3)">Lanjut</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div id="share-step-3" class="share-step">
+                        <div class="preview-card">
+                            <div class="preview-card__doc">
+                                
+                                <!-- WATERMARK PREVIEW CONTAINER -->
+                                <div class="watermark-container" id="share-document-preview">
+                                    <i class="ph ph-identification-card text-primary" style="font-size: 5rem;"></i>
+                                    <div class="watermark-overlay">
+                                        <span id="watermark-text">UNTUK INSTANSI - TGL</span>
+                                    </div>
+                                </div>
+                                
+                                <h5 id="share-document-name" style="margin-top:1rem;">Pilih dokumen</h5>
+                                <p class="text-muted" id="preview-target-name">Dinas Pendidikan</p>
+                            </div>
+                            
+                            <div class="preview-card__details">
+                                <div class="detail-row">
+                                    <span>Masa akses:</span>
+                                    <strong id="preview-duration">1 Hari</strong>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Kategori penerima:</span>
+                                    <strong id="preview-category">-</strong>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Tujuan:</span>
+                                    <strong id="preview-purpose">Pendaftaran Beasiswa</strong>
+                                </div>
+                            </div>
+                            <div class="alert alert--info mt-3">
+                                <i class="ph ph-lock-key"></i>
+                                <span>Dokumen akan dilindungi watermark otomatis sesuai tujuan pembagian.</span>
+                            </div>
+                        </div>
+                        <div class="form-actions row">
+                            <button class="btn btn--outline" onclick="app.nextShareStep(2)">Kembali</button>
+                            <button class="btn btn--primary" onclick="app.submitShare()">Konfirmasi & Bagikan</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>

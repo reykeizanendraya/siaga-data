@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAGA DATA - Helpdesk</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div id="app-page" class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <i class="ph ph-shield-check"></i>
+                <span>SIAGA DATA</span>
+            </div>
+            <nav class="sidebar__nav">
+                <a class='sidebar__link' href='/dashboard/'>
+                    <i class="ph ph-house"></i> Beranda
+                </a>
+                <a class='sidebar__link' href='/dokumen/'>
+                    <i class="ph ph-folder"></i> Dokumen Saya
+                </a>
+                <a class='sidebar__link' href='/secureshare/'>
+                    <i class="ph ph-share-network"></i> Secure Share
+                </a>
+                <a class='sidebar__link' href='/notifikasi/'>
+                    <i class="ph ph-bell"></i> Notifikasi
+                </a>
+                <a class='sidebar__link' href='/riwayat/'>
+                    <i class="ph ph-clock-counter-clockwise"></i> Riwayat Akses
+                </a>
+                <a class='sidebar__link sidebar__link--active' href='/helpdesk/'>
+                    <i class="ph ph-headset"></i> Helpdesk
+                </a>
+                <div class="sidebar__divider"></div>
+                <a class='sidebar__link' href='/pengaturan/'>
+                    <i class="ph ph-gear"></i> Pengaturan
+                </a>
+                <a class='sidebar__link' href='/profil/'>
+                    <i class="ph ph-user"></i> Akun
+                </a>
+            </nav>
+            <div class="sidebar__footer">
+                <button class="btn btn--danger btn--full" onclick="window.location.href='../index.html'">
+                    <i class="ph ph-sign-out"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="main-header__title">
+                    <h2 id="page-title">Helpdesk</h2>
+                </div>
+                <div class="main-header__user">
+                    <button class="btn-icon"><i class="ph ph-bell"></i></button>
+                    <div class="avatar" id="user-avatar-initial">C</div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <section id="panel-helpdesk" class="panel panel--active">
+                    <div class="helpdesk-intro">
+                        <div>
+                            <h4 class="section-title" style="margin-bottom:0.25rem;">Pusat Bantuan Adminduk</h4>
+                            <p class="text-muted">Kirim pertanyaan, keluhan, atau permintaan koreksi data. Petugas akan membalas di sini dan Anda juga menerima notifikasi.</p>
+                        </div>
+                        <button type="button" class="btn btn--primary" onclick="app.openNewTicket()"><i class="ph ph-plus"></i> Buat Tiket</button>
+                    </div>
+
+                    <form id="helpdesk-new-form" class="helpdesk-card helpdesk-new" style="display:none;">
+                        <h5>Tiket Baru</h5>
+                        <div class="form__group">
+                            <label for="helpdesk-category">Kategori</label>
+                            <select id="helpdesk-category" class="form__input form__input--plain" required></select>
+                        </div>
+                        <div class="form__group">
+                            <label for="helpdesk-subject">Judul</label>
+                            <input type="text" id="helpdesk-subject" class="form__input form__input--plain" maxlength="120" placeholder="Contoh: Token tidak bisa digunakan" required>
+                        </div>
+                        <div class="form__group">
+                            <label for="helpdesk-message">Pesan</label>
+                            <textarea id="helpdesk-message" class="form__input form__input--plain" rows="4" maxlength="2000" placeholder="Jelaskan kendala Anda secara singkat dan jelas" required></textarea>
+                        </div>
+                        <div class="form-actions row">
+                            <button type="button" class="btn btn--outline" onclick="app.closeNewTicket()">Batal</button>
+                            <button type="submit" class="btn btn--primary"><i class="ph ph-paper-plane-tilt"></i> Kirim Tiket</button>
+                        </div>
+                    </form>
+
+                    <div class="helpdesk-layout">
+                        <div class="helpdesk-list" id="helpdesk-ticket-list">
+                            <div class="alert alert--info"><i class="ph ph-spinner"></i><span>Memuat tiket...</span></div>
+                        </div>
+                        <div class="helpdesk-card helpdesk-thread" id="helpdesk-thread">
+                            <div class="helpdesk-empty"><i class="ph ph-chats-circle"></i><p>Pilih tiket untuk melihat percakapan.</p></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <script src="../app.js"></script>
+</body>
+</html>

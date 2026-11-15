@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAGA DATA - Pengaturan Keamanan</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div id="app-page" class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <i class="ph ph-shield-check"></i>
+                <span>SIAGA DATA</span>
+            </div>
+            <nav class="sidebar__nav">
+                <a class='sidebar__link' href='/dashboard/'>
+                    <i class="ph ph-house"></i> Beranda
+                </a>
+                <a class='sidebar__link' href='/dokumen/'>
+                    <i class="ph ph-folder"></i> Dokumen Saya
+                </a>
+                <a class='sidebar__link' href='/secureshare/'>
+                    <i class="ph ph-share-network"></i> Secure Share
+                </a>
+                <a class='sidebar__link' href='/notifikasi/'>
+                    <i class="ph ph-bell"></i> Notifikasi
+                </a>
+                <a class='sidebar__link' href='/riwayat/'>
+                    <i class="ph ph-clock-counter-clockwise"></i> Riwayat Akses
+                </a>
+                <a class='sidebar__link' href='/helpdesk/'>
+                    <i class="ph ph-headset"></i> Helpdesk
+                </a>
+                <div class="sidebar__divider"></div>
+                <a class='sidebar__link sidebar__link--active' href='/pengaturan/'>
+                    <i class="ph ph-gear"></i> Pengaturan
+                </a>
+                <a class='sidebar__link' href='/profil/'>
+                    <i class="ph ph-user"></i> Akun
+                </a>
+            </nav>
+            <div class="sidebar__footer">
+                <button class="btn btn--danger btn--full" onclick="window.location.href='../index.html'">
+                    <i class="ph ph-sign-out"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="main-header__title">
+                    <h2 id="page-title">Pengaturan Keamanan</h2>
+                </div>
+                <div class="main-header__user">
+                    <button class="btn-icon"><i class="ph ph-bell"></i></button>
+                    <div class="avatar" id="user-avatar-initial">C</div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <section id="panel-pengaturan" class="panel panel--active">
+                    <div class="alert alert--info settings-status" id="settings-status" style="display:none;"></div>
+
+                    <!-- PROFIL & DATA DIRI -->
+                    <h4 class="section-title" id="profil">Profil &amp; Data Diri</h4>
+                    <div class="settings-card">
+                        <div class="profile-completeness">
+                            <div class="profile-completeness__text">
+                                <strong>Kelengkapan data diri</strong>
+                                <span id="profile-completeness-value">0%</span>
+                            </div>
+                            <div class="progress"><div class="progress__bar" id="profile-completeness-bar" style="width:0%"></div></div>
+                        </div>
+                        <form id="settings-profile-form" class="settings-form">
+                            <div class="settings-grid">
+                                <div class="form__group">
+                                    <label for="settings-nik">NIK</label>
+                                    <input type="text" id="settings-nik" class="form__input form__input--plain" readonly>
+                                </div>
+                                <div class="form__group">
+                                    <label for="settings-name">Nama Lengkap</label>
+                                    <input type="text" id="settings-name" class="form__input form__input--plain" readonly>
+                                </div>
+                                <div class="form__group">
+                                    <label for="settings-phone">No. WhatsApp</label>
+                                    <input type="tel" id="settings-phone" class="form__input form__input--plain" placeholder="Contoh: 0812345678" required>
+                                </div>
+                                <div class="form__group">
+                                    <label for="settings-email">Email</label>
+                                    <input type="email" id="settings-email" class="form__input form__input--plain" placeholder="nama@email.com">
+                                </div>
+                                <div class="form__group">
+                                    <label for="settings-birthPlace">Tempat Lahir</label>
+                                    <input type="text" id="settings-birthPlace" class="form__input form__input--plain" placeholder="Kota/Kabupaten">
+                                </div>
+                                <div class="form__group">
+                                    <label for="settings-birthDate">Tanggal Lahir</label>
+                                    <input type="date" id="settings-birthDate" class="form__input form__input--plain">
+                                </div>
+                                <div class="form__group">
+                                    <label for="settings-gender">Jenis Kelamin</label>
+                                    <select id="settings-gender" class="form__input form__input--plain">
+                                        <option value="">Pilih</option>
+                                        <option>Laki-laki</option>
+                                        <option>Perempuan</option>
+                                    </select>
+                                </div>
+                                <div class="form__group">
+                                    <label for="settings-religion">Agama</label>
+                                    <select id="settings-religion" class="form__input form__input--plain">
+                                        <option value="">Pilih</option>
+                                        <option>Islam</option>
+                                        <option>Kristen</option>
+                                        <option>Katolik</option>
+                                        <option>Hindu</option>
+                                        <option>Buddha</option>
+                                        <option>Konghucu</option>
+                                        <option>Kepercayaan Terhadap Tuhan YME</option>
+                                    </select>
+                                </div>
+                                <div class="form__group">
+                                    <label for="settings-maritalStatus">Status Perkawinan</label>
+                                    <select id="settings-maritalStatus" class="form__input form__input--plain">
+                                        <option value="">Pilih</option>
+                                        <option>Belum Kawin</option>
+                                        <option>Kawin</option>
+                                        <option>Cerai Hidup</option>
+                                        <option>Cerai Mati</option>
+                                    </select>
+                                </div>
+                                <div class="form__group">
+                                    <label for="settings-occupation">Pekerjaan</label>
+                                    <input type="text" id="settings-occupation" class="form__input form__input--plain" placeholder="Contoh: Pelajar/Mahasiswa">
+                                </div>
+                                <div class="form__group settings-grid__full">
+                                    <label for="settings-address">Alamat Domisili</label>
+                                    <textarea id="settings-address" class="form__input form__input--plain" rows="2" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan"></textarea>
+                                </div>
+                            </div>
+                            <p class="text-muted settings-note"><i class="ph ph-info"></i> NIK dan nama mengikuti data resmi petugas. Ajukan perubahan melalui <a href="../helpdesk/index.html?kategori=Koreksi%20Data">Helpdesk</a>.</p>
+                            <div class="form-actions row">
+                                <button type="submit" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Simpan Profil</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- KEAMANAN AKUN -->
+                    <h4 class="section-title mt-4">Keamanan Akun</h4>
+                    <div class="settings-list">
+                        <div class="setting-item setting-item--clickable" onclick="app.togglePasswordForm()">
+                            <div class="setting-item__icon"><i class="ph ph-lock-key"></i></div>
+                            <div class="setting-item__content">
+                                <h5>Ubah Password</h5>
+                                <p id="password-setting-desc">Gunakan password yang kuat</p>
+                            </div>
+                            <i class="ph ph-caret-right" id="password-form-caret"></i>
+                        </div>
+                        <form id="settings-password-form" class="settings-card settings-form" style="display:none;">
+                            <p class="text-muted settings-note"><i class="ph ph-shield-check"></i> Password akun menjadi lapisan keamanan tambahan: setelah diaktifkan, login memerlukan Token Akses <strong>dan</strong> password ini.</p>
+                            <div class="form__group" id="current-password-group">
+                                <label for="current-password">Password Saat Ini</label>
+                                <div class="form__input-wrapper">
+                                    <i class="ph ph-lock"></i>
+                                    <input type="password" id="current-password" class="form__input form__input--with-toggle" placeholder="Masukkan password saat ini" autocomplete="current-password">
+                                    <button type="button" class="password-toggle" onclick="app.togglePassword('current-password', this)" aria-label="Tampilkan password"><i class="ph ph-eye-slash"></i></button>
+                                </div>
+                            </div>
+                            <div class="form__group">
+                                <label for="new-password">Password Baru</label>
+                                <div class="form__input-wrapper">
+                                    <i class="ph ph-lock"></i>
+                                    <input type="password" id="new-password" class="form__input form__input--with-toggle" placeholder="Minimal 8 karakter, huruf dan angka" autocomplete="new-password" required>
+                                    <button type="button" class="password-toggle" onclick="app.togglePassword('new-password', this)" aria-label="Tampilkan password"><i class="ph ph-eye-slash"></i></button>
+                                </div>
+                                <small class="password-strength" id="password-strength" aria-live="polite"></small>
+                            </div>
+                            <div class="form__group">
+                                <label for="confirm-password">Konfirmasi Password Baru</label>
+                                <div class="form__input-wrapper">
+                                    <i class="ph ph-lock"></i>
+                                    <input type="password" id="confirm-password" class="form__input form__input--with-toggle" placeholder="Ulangi password baru" autocomplete="new-password" required>
+                                    <button type="button" class="password-toggle" onclick="app.togglePassword('confirm-password', this)" aria-label="Tampilkan password"><i class="ph ph-eye-slash"></i></button>
+                                </div>
+                            </div>
+                            <div class="form-actions row">
+                                <button type="button" class="btn btn--outline" id="remove-password-btn" style="display:none;" onclick="app.removeAccountPassword()">Nonaktifkan Password</button>
+                                <button type="submit" class="btn btn--primary"><i class="ph ph-check"></i> Simpan Password</button>
+                            </div>
+                        </form>
+                        <div class="setting-item">
+                            <div class="setting-item__icon"><i class="ph ph-device-mobile"></i></div>
+                            <div class="setting-item__content">
+                                <h5>Verifikasi 2 Langkah</h5>
+                                <p>Kode OTP akan dikirim ke nomor HP kamu</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="setting-twoFactor" checked>
+                                <span class="toggle__slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-item__icon"><i class="ph ph-fingerprint"></i></div>
+                            <div class="setting-item__content">
+                                <h5>Biometrik</h5>
+                                <p>Login lebih cepat dan aman</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="setting-biometric" checked>
+                                <span class="toggle__slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- TOKEN AKSES -->
+                    <h4 class="section-title mt-4">Token Akses</h4>
+                    <div class="settings-card token-info">
+                        <div class="info-row"><span>Status Token</span><strong id="settings-token-status">-</strong></div>
+                        <div class="info-row"><span>Berlaku Sampai</span><strong id="settings-token-expiry">-</strong></div>
+                        <div class="info-row"><span>Terakhir Diperbarui</span><strong id="settings-updated-at">-</strong></div>
+                        <p class="text-muted settings-note"><i class="ph ph-clock-countdown"></i> Token berlaku 3 jam sejak diklaim. Setelah kedaluwarsa, sesi otomatis berakhir dan Anda perlu klaim ulang di halaman login.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <script src="../app.js"></script>
+</body>
+</html>

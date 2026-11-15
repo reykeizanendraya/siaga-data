@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAGA DATA - Beranda</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div id="app-page" class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <i class="ph ph-shield-check"></i>
+                <span>SIAGA DATA</span>
+            </div>
+            <nav class="sidebar__nav">
+                <a class='sidebar__link sidebar__link--active' href='/dashboard/'>
+                    <i class="ph ph-house"></i> Beranda
+                </a>
+                <a class='sidebar__link' href='/dokumen/'>
+                    <i class="ph ph-folder"></i> Dokumen Saya
+                </a>
+                <a class='sidebar__link' href='/secureshare/'>
+                    <i class="ph ph-share-network"></i> Secure Share
+                </a>
+                <a class='sidebar__link' href='/notifikasi/'>
+                    <i class="ph ph-bell"></i> Notifikasi
+                </a>
+                <a class='sidebar__link' href='/riwayat/'>
+                    <i class="ph ph-clock-counter-clockwise"></i> Riwayat Akses
+                </a>
+                <a class='sidebar__link' href='/helpdesk/'>
+                    <i class="ph ph-headset"></i> Helpdesk
+                </a>
+                <div class="sidebar__divider"></div>
+                <a class='sidebar__link' href='/pengaturan/'>
+                    <i class="ph ph-gear"></i> Pengaturan
+                </a>
+                <a class='sidebar__link' href='/profil/'>
+                    <i class="ph ph-user"></i> Akun
+                </a>
+            </nav>
+            <div class="sidebar__footer">
+                <button class="btn btn--danger btn--full" onclick="window.location.href='../index.html'">
+                    <i class="ph ph-sign-out"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="main-header__title">
+                    <h2 id="page-title">Beranda</h2>
+                </div>
+                <div class="main-header__user">
+                    <button class="btn-icon"><i class="ph ph-bell"></i></button>
+                    <div class="avatar" id="user-avatar-initial">C</div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <section id="panel-dashboard" class="panel panel--active">
+                    <div class="welcome-banner">
+                        <div class="welcome-banner__text">
+                            <h3>Halo, <span id="user-name-display"></span> 👋</h3>
+                            <p>Data kamu terlindungi dengan baik.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card__icon stat-card__icon--blue"><i class="ph ph-file-text"></i></div>
+                            <div class="stat-card__info">
+                                <h4>Dokumen</h4>
+                                <p><strong id="doc-count"></strong> tersimpan</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__icon stat-card__icon--green" id="security-status-icon"><i class="ph ph-shield-check"></i></div>
+                            <div class="stat-card__info">
+                                <h4>Keamanan</h4>
+                                <p id="security-status-container" class="text-success"><strong id="security-status-text">Aman</strong></p>
+                                <small id="security-status-detail">Memeriksa aktivitas login...</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="section-title">Layanan Utama</h4>
+                    <div class="services-list">
+                        <div class="service-item" onclick="window.location.href='../dokumen/index.html'">
+                            <div class="service-item__icon"><i class="ph ph-folder"></i></div>
+                            <div class="service-item__content">
+                                <h5>Dokumen Saya</h5>
+                                <p>Lihat dan kelola dokumen kependudukan</p>
+                            </div>
+                            <i class="ph ph-caret-right text-muted"></i>
+                        </div>
+                        <div class="service-item" onclick="window.location.href='../secureshare/index.html'">
+                            <div class="service-item__icon"><i class="ph ph-share-network"></i></div>
+                            <div class="service-item__content">
+                                <h5>Secure Share</h5>
+                                <p>Bagikan dokumen dengan aman</p>
+                            </div>
+                            <i class="ph ph-caret-right text-muted"></i>
+                        </div>
+                        <div class="service-item" onclick="window.location.href='../notifikasi/index.html'">
+                            <div class="service-item__icon"><i class="ph ph-bell"></i></div>
+                            <div class="service-item__content">
+                                <h5>Notifikasi</h5>
+                                <p>Pembaruan dan pengingat penting</p>
+                            </div>
+                            <i class="ph ph-caret-right text-muted"></i>
+                        </div>
+                        <div class="service-item" onclick="window.location.href='../helpdesk/index.html'">
+                            <div class="service-item__icon"><i class="ph ph-headset"></i></div>
+                            <div class="service-item__content">
+                                <h5>Helpdesk</h5>
+                                <p>Tanya atau laporkan kendala ke petugas Adminduk</p>
+                            </div>
+                            <i class="ph ph-caret-right text-muted"></i>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <script src="../app.js"></script>
+</body>
+</html>

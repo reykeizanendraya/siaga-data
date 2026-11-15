@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAGA DATA - Dokumen Saya</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div id="app-page" class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <i class="ph ph-shield-check"></i>
+                <span>SIAGA DATA</span>
+            </div>
+            <nav class="sidebar__nav">
+                <a class='sidebar__link' href='/dashboard/'>
+                    <i class="ph ph-house"></i> Beranda
+                </a>
+                <a class='sidebar__link sidebar__link--active' href='/dokumen/'>
+                    <i class="ph ph-folder"></i> Dokumen Saya
+                </a>
+                <a class='sidebar__link' href='/secureshare/'>
+                    <i class="ph ph-share-network"></i> Secure Share
+                </a>
+                <a class='sidebar__link' href='/notifikasi/'>
+                    <i class="ph ph-bell"></i> Notifikasi
+                </a>
+                <a class='sidebar__link' href='/riwayat/'>
+                    <i class="ph ph-clock-counter-clockwise"></i> Riwayat Akses
+                </a>
+                <a class='sidebar__link' href='/helpdesk/'>
+                    <i class="ph ph-headset"></i> Helpdesk
+                </a>
+                <div class="sidebar__divider"></div>
+                <a class='sidebar__link' href='/pengaturan/'>
+                    <i class="ph ph-gear"></i> Pengaturan
+                </a>
+                <a class='sidebar__link' href='/profil/'>
+                    <i class="ph ph-user"></i> Akun
+                </a>
+            </nav>
+            <div class="sidebar__footer">
+                <button class="btn btn--danger btn--full" onclick="window.location.href='../index.html'">
+                    <i class="ph ph-sign-out"></i> Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="main-header__title">
+                    <h2 id="page-title">Dokumen Saya</h2>
+                </div>
+                <div class="main-header__user">
+                    <button class="btn-icon"><i class="ph ph-bell"></i></button>
+                    <div class="avatar" id="user-avatar-initial">C</div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <section id="panel-dokumen" class="panel panel--active">
+                    <div class="filter-tabs" id="doc-filter-tabs" role="tablist" aria-label="Filter dokumen">
+                        <button type="button" class="tab tab--active" role="tab" aria-selected="true" data-filter="all"><i class="ph ph-squares-four"></i><span>Semua</span><span class="tab__count" data-count="all">0</span></button>
+                        <button type="button" class="tab" role="tab" aria-selected="false" data-filter="active"><i class="ph ph-check-circle"></i><span>Aktif</span><span class="tab__count" data-count="active">0</span></button>
+                        <button type="button" class="tab tab--warning" role="tab" aria-selected="false" data-filter="update"><i class="ph ph-arrows-clockwise"></i><span>Perlu Diperbarui</span><span class="tab__count" data-count="update">0</span></button>
+                    </div>
+                    <div class="document-list" id="document-list-container">
+                        <!-- Rendered via JS -->
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- SLIDE-IN PANEL (For Document Details) -->
+    <div id="slide-in-panel" class="slide-panel">
+        <div class="slide-panel__overlay" onclick="app.closeSlidePanel()"></div>
+        <div class="slide-panel__content">
+            <div class="slide-panel__header">
+                <button class="btn-icon" onclick="app.closeSlidePanel()"><i class="ph ph-x"></i></button>
+                <h3>Preview Dokumen</h3>
+            </div>
+            <div class="slide-panel__body" id="slide-panel-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>

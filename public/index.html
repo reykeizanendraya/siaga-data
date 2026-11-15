@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAGA DATA - Login</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div id="login-page" class="login-layout">
+        <div class="login-layout__illustration">
+            <div class="splash-content">
+                <div class="logo-shield">
+                    <i class="ph ph-shield-check"></i>
+                </div>
+                <h1>SIAGA DATA</h1>
+                <p class="subtitle">Sistem Informasi dan Keamanan Data Kependudukan</p>
+                <p class="tagline">Data Terlindungi, Identitas Aman.</p>
+                <div class="splash-features">
+                    <div class="feature-card">
+                        <i class="ph ph-lock-key"></i>
+                        <span>Secure Document</span>
+                    </div>
+                    <div class="feature-card">
+                        <i class="ph ph-users"></i>
+                        <span>Kontrol Hak Akses</span>
+                    </div>
+                    <div class="feature-card">
+                        <i class="ph ph-shield-check"></i>
+                        <span>Verifikasi 2 Langkah</span>
+                    </div>
+                    <!-- TAUTAN PANDUAN PENGGUNA -->
+                    <button type="button" class="feature-card feature-card--guide" id="open-guide-btn" onclick="openGuide()" aria-haspopup="dialog" aria-controls="guide-modal" title="Pelajari cara memakai SIAGA DATA">
+                        <i class="ph ph-book-open-text"></i>
+                        <span>Panduan Pengguna</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="login-layout__form-container">
+            <div class="login-box">
+                <div class="login-box__header">
+                    <h2>Selamat Datang</h2>
+                    <p>Pilih peran untuk melanjutkan</p>
+                </div>
+                
+                <!-- TABS -->
+                <div class="auth-tabs">
+                    <div class="auth-tab auth-tab--active" onclick="app.switchAuthTab('user')">Pengguna</div>
+                    <div class="auth-tab" onclick="app.switchAuthTab('admin')">Petugas Adminduk</div>
+                </div>
+
+                <!-- PANEL PENGGUNA -->
+                <div id="auth-panel-user" class="auth-panel auth-panel--active">
+                    
+                    <!-- FORM LOGIN PENGGUNA -->
+                    <form id="login-form-user" class="form">
+                        <div class="form__group">
+                            <label for="phone-login">NIK atau Nomor HP</label>
+                            <div class="form__input-wrapper">
+                                <i class="ph ph-user"></i>
+                                <input type="text" id="phone-login" class="form__input" placeholder="Masukkan NIK atau nomor HP terdaftar" required>
+                            </div>
+                        </div>
+                        <div class="form__group">
+                            <label for="token-login">Token Akses</label>
+                            <div class="form__input-wrapper">
+                                <i class="ph ph-key"></i>
+                                <input type="password" id="token-login" class="form__input form__input--with-toggle" placeholder="Masukkan Token Akses" required>
+                                <button type="button" class="password-toggle" onclick="app.togglePassword('token-login', this)" aria-label="Tampilkan password" title="Tampilkan password"><i class="ph ph-eye-slash"></i></button>
+                            </div>
+                        </div>
+                        <div class="form__group" id="password-login-group" style="display: none;">
+                            <label for="password-login">Password Akun</label>
+                            <div class="form__input-wrapper">
+                                <i class="ph ph-lock"></i>
+                                <input type="password" id="password-login" class="form__input form__input--with-toggle" placeholder="Masukkan password akun" autocomplete="current-password">
+                                <button type="button" class="password-toggle" onclick="app.togglePassword('password-login', this)" aria-label="Tampilkan password" title="Tampilkan password"><i class="ph ph-eye-slash"></i></button>
+                            </div>
+                            <small class="text-muted">Akun Anda dilindungi password tambahan yang dibuat di menu Pengaturan.</small>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full">Masuk</button>
+                        
+                        <div class="divider"><span>Belum punya token atau token kedaluwarsa?</span></div>
+                        
+                        <button type="button" class="btn btn--outline btn--full" onclick="app.switchUserMode('register')">
+                            <i class="ph ph-key"></i> Daftar / Klaim Token
+                        </button>
+                    </form>
+
+                    <!-- FORM KLAIM TOKEN PENGGUNA -->
+                    <form id="register-form-user" class="form" style="display: none;">
+                        <div class="alert alert--warning" id="token-expired-notice" style="display: none; margin-bottom: 1rem;">
+                            <i class="ph ph-clock-countdown"></i>
+                            <span id="token-expired-message">Token Akses Anda sudah kedaluwarsa. Klaim token baru untuk masuk.</span>
+                        </div>
+                        <p class="text-muted claim-info"><i class="ph ph-info"></i> Token Akses berlaku <strong>3 jam</strong> sejak diklaim. Setelah itu sesi otomatis berakhir dan Anda perlu klaim ulang di sini. Token dan notifikasi juga dikirim ke email Anda.</p>
+                        <div class="form__group">
+                            <label for="nik-register">NIK (16 digit)</label>
+                            <div class="form__input-wrapper">
+                                <i class="ph ph-identification-card"></i>
+                                <input type="text" id="nik-register" class="form__input" placeholder="Masukkan 16 digit NIK Anda" inputmode="numeric" maxlength="16" autocomplete="off" required>
+                            </div>
+                            <small class="nik-hint" id="nik-register-hint" aria-live="polite"></small>
+                        </div>
+                        <div class="form__group">
+                            <label for="wa-register">No. WhatsApp</label>
+                            <div class="form__input-wrapper">
+                                <i class="ph ph-whatsapp-logo"></i>
+                                <input type="tel" id="wa-register" class="form__input" placeholder="Contoh: 0812345678" required>
+                            </div>
+                        </div>
+                        <div class="form__group">
+                            <label for="email-register">Alamat Email <span class="text-danger" aria-hidden="true">*</span></label>
+                            <div class="form__input-wrapper">
+                                <i class="ph ph-envelope-simple"></i>
+                                <input type="email" id="email-register" class="form__input" placeholder="nama@email.com" autocomplete="email" maxlength="120" required>
+                            </div>
+                            <small class="text-muted">Wajib diisi. Dipakai untuk notifikasi registrasi, peringatan token, dan dokumen dibagikan.</small>
+                        </div>
+                        <button type="submit" class="btn btn--success btn--full" style="background: var(--color-success); color: white;">
+                            <i class="ph ph-key"></i> Klaim Token
+                        </button>
+                        
+                        <div class="divider"><span>Sudah punya token?</span></div>
+                        
+                        <button type="button" class="btn btn--outline btn--full" onclick="app.switchUserMode('login')">
+                            Kembali ke Login
+                        </button>
+                    </form>
+                </div>
+
+                <!-- PANEL ADMIN -->
+                <div id="auth-panel-admin" class="auth-panel">
+                    <form id="login-form-admin" class="form">
+                        <div class="form__group">
+                            <label for="admin-id">ID Tempat Kerja</label>
+                            <div class="form__input-wrapper">
+                                <i class="ph ph-buildings"></i>
+                                <input type="text" id="admin-id" class="form__input" placeholder="Misal: ADM-001" required>
+                            </div>
+                        </div>
+                        <div class="form__group">
+                            <label for="admin-pass">Password</label>
+                            <div class="form__input-wrapper">
+                                <i class="ph ph-lock"></i>
+                                <input type="password" id="admin-pass" class="form__input form__input--with-toggle" placeholder="Masukkan password" required>
+                                <button type="button" class="password-toggle" onclick="app.togglePassword('admin-pass', this)" aria-label="Tampilkan password" title="Tampilkan password"><i class="ph ph-eye-slash"></i></button>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full" style="background: var(--color-primary-dark);">Masuk sebagai Admin</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL TOKEN AKSES -->
+    <div id="token-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="token-modal-title">Token Berhasil Diklaim!</h3>
+            <p class="text-muted">Gunakan Token Akses ini untuk masuk. Token berlaku 3 jam.</p>
+            <div class="token-box mt-3">
+                <span id="generated-token-text">TKN-000000</span>
+                <button type="button" class="btn btn--outline token-copy-btn" id="copy-token-btn" onclick="app.copyToken()">
+                    <i class="ph ph-copy"></i> <span>Salin Token</span>
+                </button>
+            </div>
+            <p class="text-muted token-expiry" id="token-expiry-text"></p>
+            <p class="text-muted token-expiry" id="token-email-text" style="display:none;"></p>
+            <div class="form-actions mt-4">
+                <button class="btn btn--primary btn--full" onclick="app.closeTokenModal()">Tutup & Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PANDUAN PENGGUNA (teks contoh, silakan sesuaikan isinya) -->
+    <div id="guide-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="guide-modal-title" onclick="if(event.target===this)closeGuide()">
+        <div class="modal-content guide-modal">
+            <div class="guide-modal__head">
+                <div class="guide-modal__title">
+                    <span class="guide-modal__badge"><i class="ph ph-book-open-text"></i></span>
+                    <div>
+                        <h3 id="guide-modal-title">Panduan Pengguna</h3>
+                        <p class="text-muted">Langkah singkat menggunakan SIAGA DATA</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-icon" onclick="closeGuide()" aria-label="Tutup panduan"><i class="ph ph-x"></i></button>
+            </div>
+
+            <div class="guide-tabs" role="tablist">
+                <button type="button" class="guide-tab guide-tab--active" role="tab" data-guide-tab="user" onclick="switchGuideTab('user')">Pengguna</button>
+                <button type="button" class="guide-tab" role="tab" data-guide-tab="admin" onclick="switchGuideTab('admin')">Petugas Adminduk</button>
+                <button type="button" class="guide-tab" role="tab" data-guide-tab="faq" onclick="switchGuideTab('faq')">Keamanan &amp; FAQ</button>
+            </div>
+
+            <div class="guide-modal__body">
+                <!-- PANDUAN PENGGUNA -->
+                <section class="guide-section guide-section--active" data-guide-section="user">
+                    <h4><i class="ph ph-key"></i> 1. Klaim Token Akses</h4>
+                    <ol class="guide-steps">
+                        <li>Pada tab <strong>Pengguna</strong>, klik tombol <strong>Daftar / Klaim Token</strong>.</li>
+                        <li>Isi <strong>NIK (16 digit)</strong>, <strong>No. WhatsApp</strong>, dan <strong>Alamat Email</strong> yang aktif.</li>
+                        <li>Klik <strong>Klaim Token</strong>. Token Akses (contoh: <code>TKN-123456</code>) akan muncul dan juga dikirim ke email Anda.</li>
+                        <li>Salin token tersebut. Token berlaku selama <strong>3 jam</strong> sejak diklaim.</li>
+                    </ol>
+
+                    <h4><i class="ph ph-sign-in"></i> 2. Masuk ke Aplikasi</h4>
+                    <ol class="guide-steps">
+                        <li>Masukkan <strong>NIK atau Nomor HP</strong> yang terdaftar.</li>
+                        <li>Tempelkan <strong>Token Akses</strong> yang sudah Anda klaim.</li>
+                        <li>Jika Anda sudah membuat password tambahan di menu Pengaturan, isi juga <strong>Password Akun</strong>.</li>
+                        <li>Klik <strong>Masuk</strong> untuk membuka Dashboard.</li>
+                    </ol>
+
+                    <h4><i class="ph ph-squares-four"></i> 3. Menggunakan Fitur Utama</h4>
+                    <ul class="guide-list">
+                        <li><strong>Dashboard</strong> &ndash; ringkasan dokumen, aktivitas, dan sisa waktu sesi.</li>
+                        <li><strong>Dokumen</strong> &ndash; lihat dan unggah dokumen kependudukan (KTP, KK, KIA, Akta).</li>
+                        <li><strong>SecureShare</strong> &ndash; bagikan dokumen secara aman melalui QR/tautan sementara.</li>
+                        <li><strong>Riwayat</strong> &ndash; pantau siapa dan kapan dokumen Anda diakses.</li>
+                        <li><strong>Notifikasi</strong> &ndash; informasi terbaru terkait akun dan dokumen.</li>
+                        <li><strong>Helpdesk</strong> &ndash; kirim pertanyaan atau laporan kendala ke petugas.</li>
+                        <li><strong>Pengaturan &amp; Profil</strong> &ndash; atur password tambahan dan data diri.</li>
+                    </ul>
+                </section>
+
+                <!-- PANDUAN PETUGAS -->
+                <section class="guide-section" data-guide-section="admin">
+                    <h4><i class="ph ph-buildings"></i> 1. Masuk sebagai Petugas</h4>
+                    <ol class="guide-steps">
+                        <li>Pilih tab <strong>Petugas Adminduk</strong> pada form login.</li>
+                        <li>Masukkan <strong>ID Tempat Kerja</strong> (contoh: <code>ADM-001</code>) dan <strong>Password</strong>.</li>
+                        <li>Klik <strong>Masuk sebagai Admin</strong> untuk membuka panel petugas.</li>
+                    </ol>
+
+                    <h4><i class="ph ph-users"></i> 2. Tugas Utama Petugas</h4>
+                    <ul class="guide-list">
+                        <li>Kelola dan perbarui data penduduk yang terdaftar.</li>
+                        <li>Unggah dokumen kependudukan resmi ke akun penduduk.</li>
+                        <li>Tanggapi tiket <strong>Helpdesk</strong> dari pengguna.</li>
+                        <li>Pantau aktivitas akses untuk memastikan keamanan data.</li>
+                    </ul>
+                </section>
+
+                <!-- KEAMANAN & FAQ -->
+                <section class="guide-section" data-guide-section="faq">
+                    <h4><i class="ph ph-shield-check"></i> Tips Keamanan</h4>
+                    <ul class="guide-list">
+                        <li>Jangan bagikan Token Akses atau password kepada siapa pun, termasuk yang mengaku petugas.</li>
+                        <li>Selalu <strong>Keluar</strong> setelah selesai, terutama di perangkat umum.</li>
+                        <li>Gunakan durasi berbagi dokumen sesingkat mungkin di SecureShare.</li>
+                        <li>Aktifkan password tambahan di menu Pengaturan untuk perlindungan ekstra.</li>
+                    </ul>
+
+                    <h4><i class="ph ph-question"></i> Pertanyaan Umum</h4>
+                    <ol class="guide-steps">
+                        <li><strong>Token saya kedaluwarsa, apa yang harus dilakukan?</strong><br>Klik <em>Daftar / Klaim Token</em> lalu klaim ulang token baru dengan NIK yang sama.</li>
+                        <li><strong>Email token tidak masuk?</strong><br>Periksa folder spam/promosi, atau pastikan alamat email yang diisi benar.</li>
+                        <li><strong>Saya lupa password akun tambahan.</strong><br>Hubungi petugas melalui Helpdesk atau kantor Disdukcapil terdekat.</li>
+                    </ol>
+                </section>
+            </div>
+
+            <div class="guide-modal__foot">
+                <div class="alert alert--info">
+                    <i class="ph ph-info"></i>
+                    <span>Butuh bantuan lebih lanjut? Setelah masuk, gunakan menu <strong>Helpdesk</strong>.</span>
+                </div>
+                <button type="button" class="btn btn--primary btn--full" onclick="closeGuide()"><i class="ph ph-arrow-left"></i> Kembali ke Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Panduan Pengguna: modal mandiri, tidak mengubah logika app.js
+        (function () {
+            var lastFocus = null;
+            function modal() { return document.getElementById('guide-modal'); }
+            window.switchGuideTab = function (key) {
+                document.querySelectorAll('.guide-tab').forEach(function (t) {
+                    var on = t.getAttribute('data-guide-tab') === key;
+                    t.classList.toggle('guide-tab--active', on);
+                    t.setAttribute('aria-selected', on ? 'true' : 'false');
+                });
+                document.querySelectorAll('.guide-section').forEach(function (s) {
+                    s.classList.toggle('guide-section--active', s.getAttribute('data-guide-section') === key);
+                });
+                var body = document.querySelector('.guide-modal__body');
+                if (body) body.scrollTop = 0;
+            };
+            window.openGuide = function () {
+                lastFocus = document.activeElement;
+                modal().classList.add('modal-overlay--open');
+                document.body.style.overflow = 'hidden';
+                var closeBtn = modal().querySelector('.guide-modal__head .btn-icon');
+                if (closeBtn) closeBtn.focus();
+                if (location.hash !== '#panduan') history.replaceState(null, '', location.pathname + location.search + '#panduan');
+            };
+            window.closeGuide = function () {
+                modal().classList.remove('modal-overlay--open');
+                document.body.style.overflow = '';
+                if (location.hash === '#panduan') history.replaceState(null, '', location.pathname + location.search);
+                if (lastFocus && lastFocus.focus) lastFocus.focus();
+            };
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && modal().classList.contains('modal-overlay--open')) window.closeGuide();
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                if (location.hash === '#panduan') window.openGuide();
+            });
+        })();
+    </script>
+
+    <script src="./app.js"></script>
+</body>
+</html>

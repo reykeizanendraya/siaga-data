@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akses Dokumen - SIAGA DATA</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        body { min-height: 100vh; padding: 2rem; }
+        #document-access-view { max-width: 900px; margin: 0 auto; padding: 2rem; background: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
+        #temporary-document-content { margin-top: 1.5rem; text-align: center; }
+        #temporary-document-content img { object-fit: contain; }
+        @media (max-width: 600px) { body { padding: 1rem; } #document-access-view { padding: 1.25rem; } }
+    </style>
+</head>
+<body>
+    <main id="document-access-view" aria-live="polite">
+        <h1>Memeriksa akses dokumen...</h1>
+    </main>
+    <script src="./app.js"></script>
+</body>
+</html>
