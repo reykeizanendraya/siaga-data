@@ -332,7 +332,11 @@ const app = {
         const emailText = document.getElementById('token-email-text');
         if(emailText) {
             emailText.style.display = result.email ? 'block' : 'none';
-            emailText.textContent = result.email ? `Salinan token & notifikasi dikirim ke ${result.email}.` : '';
+            emailText.textContent = result.email
+                ? (result.emailSent
+                    ? `Salinan token telah dikirim ke ${result.email}. Notifikasi berikutnya dikirim ke alamat yang sama.`
+                    : `Email token belum berhasil dikirim ke ${result.email}. Simpan token di atas dan coba klaim ulang untuk mengirim kembali.`)
+                : '';
         }
         this.resetCopyButton();
         document.getElementById('token-modal').classList.add('modal-overlay--open');
@@ -1664,7 +1668,12 @@ const app = {
             headers: { 'Content-Type': 'application/json', ...this.residentHeaders() },
             body: JSON.stringify({ title, message: text, tone, page: document.title }),
             keepalive: true
-        }).catch(() => { /* Email gagal tidak mengganggu tampilan notifikasi */ });
+        }).then(async response => {
+            const result = await response.json();
+            if(!response.ok || !result.sent) throw new Error('Email belum terkirim');
+        }).catch(() => {
+            try { localStorage.removeItem(key); } catch(error) { /* Penyimpanan tidak tersedia */ }
+        });
     }
 };
 
