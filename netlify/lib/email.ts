@@ -1,11 +1,11 @@
 import nodemailer from "nodemailer";
 
 // Pengiriman email notifikasi SIAGA DATA lewat SMTP Gmail.
+// Semua email notifikasi SELALU dikirim dari akun resmi siagadatabersama@gmail.com.
 // Kredensial HANYA dibaca dari environment variable Netlify (tidak pernah dikirim ke browser):
-//   SMTP_USER  – alamat Gmail pengirim (default: siagadatabersama@gmail.com)
-//   SMTP_PASS  – App Password Gmail (16 karakter) untuk akun tersebut
+//   SMTP_PASS  – App Password Gmail (16 karakter) untuk akun siagadatabersama@gmail.com
 //   SMTP_HOST / SMTP_PORT – opsional, default smtp.gmail.com:465
-const DEFAULT_SENDER = "siagadatabersama@gmail.com";
+export const SENDER_EMAIL = "siagadatabersama@gmail.com";
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 let transporter: ReturnType<typeof nodemailer.createTransport> | null = null;
@@ -19,7 +19,7 @@ function getTransporter() {
       host: process.env.SMTP_HOST || "smtp.gmail.com",
       port,
       secure: port === 465,
-      auth: { user: process.env.SMTP_USER || DEFAULT_SENDER, pass },
+      auth: { user: SENDER_EMAIL, pass },
     });
   }
   return transporter;
@@ -77,7 +77,7 @@ export async function sendEmail(to: string | undefined | null, content: MailCont
   try {
     const { html, text } = render(content);
     await transport.sendMail({
-      from: `"SIAGA DATA" <${process.env.SMTP_USER || DEFAULT_SENDER}>`,
+      from: `"SIAGA DATA" <${SENDER_EMAIL}>`,
       to,
       subject: `[SIAGA DATA] ${content.subject}`,
       html,
