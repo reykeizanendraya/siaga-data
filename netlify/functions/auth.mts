@@ -79,7 +79,7 @@ async function register(req: Request, context: Context) {
     : { token, tokenExpiresAt: expiresAt, tokenWarningSentFor: null, profile, updatedAt: now })
     .where(eq(residents.nik, nik));
 
-  const emailTask = sendEmail(email, {
+  const emailSent = await sendEmail(email, {
     subject: alreadyClaimed ? "Token Akses Anda masih aktif" : "Registrasi & klaim Token Akses berhasil",
     heading: alreadyClaimed ? "Token Akses Anda masih aktif" : "Registrasi berhasil",
     intro: `Halo ${user.name}, ${alreadyClaimed ? "Anda meminta ulang Token Akses yang masih berlaku." : "klaim Token Akses SIAGA DATA Anda berhasil."} Gunakan token berikut bersama NIK atau nomor HP untuk masuk.`,
@@ -88,9 +88,8 @@ async function register(req: Request, context: Context) {
     note: `Setelah ${TOKEN_TTL_HOURS} jam token otomatis kedaluwarsa, sesi Anda berakhir, dan Anda perlu melakukan klaim ulang. Jangan bagikan token ini kepada siapa pun.`,
     tone: "success",
   });
-  context.waitUntil?.(emailTask);
 
-  return json(alreadyClaimed ? 200 : 201, { token, expiresAt, phone: user.phone, alreadyClaimed, email, ttlMs: TOKEN_TTL_MS });
+  return json(alreadyClaimed ? 200 : 201, { token, expiresAt, phone: user.phone, alreadyClaimed, email, emailSent, ttlMs: TOKEN_TTL_MS });
 }
 
 export default async (req: Request, context: Context) => {

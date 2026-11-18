@@ -138,7 +138,7 @@ export async function addActivity(nik: string, title: string, description: strin
     };
     return sendEmail(to, content);
   })().catch((error) => {
-    console.error("[email] Gagal memproses email notifikasi:", (error as Error).message);
+    console.error("[email] Gagal memproses email notifikasi.");
     return false;
   });
   if (options.context?.waitUntil) options.context.waitUntil(task);

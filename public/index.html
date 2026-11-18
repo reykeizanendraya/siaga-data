@@ -118,9 +118,9 @@
                             <label for="email-register">Alamat Email <span class="text-danger" aria-hidden="true">*</span></label>
                             <div class="form__input-wrapper">
                                 <i class="ph ph-envelope-simple"></i>
-                                <input type="email" id="email-register" class="form__input" placeholder="nama@email.com" autocomplete="email" maxlength="120" required>
+                                <input type="email" id="email-register" class="form__input" placeholder="nama@email.com" autocomplete="email" maxlength="120" aria-describedby="email-register-hint" required>
                             </div>
-                            <small class="text-muted">Wajib diisi. Dipakai untuk notifikasi registrasi, peringatan token, dan dokumen dibagikan.</small>
+                            <small class="text-muted" id="email-register-hint">Masukkan email aktif Anda. Token akses dan semua notifikasi akun dikirim ke alamat ini dari siagadatabersama@gmail.com.</small>
                         </div>
                         <button type="submit" class="btn btn--success btn--full" style="background: var(--color-success); color: white;">
                             <i class="ph ph-key"></i> Klaim Token

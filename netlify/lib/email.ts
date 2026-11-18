@@ -2,16 +2,16 @@ import nodemailer from "nodemailer";
 
 // Pengiriman email notifikasi SIAGA DATA lewat SMTP Gmail.
 // Kredensial HANYA dibaca dari environment variable Netlify (tidak pernah dikirim ke browser):
-//   SMTP_USER  – alamat Gmail pengirim (default: siagadatabersama@gmail.com)
+//   Pengirim tetap: siagadatabersama@gmail.com
 //   SMTP_PASS  – App Password Gmail (16 karakter) untuk akun tersebut
 //   SMTP_HOST / SMTP_PORT – opsional, default smtp.gmail.com:465
-const DEFAULT_SENDER = "siagadatabersama@gmail.com";
+const SENDER_EMAIL = "siagadatabersama@gmail.com";
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 let transporter: ReturnType<typeof nodemailer.createTransport> | null = null;
 
 function getTransporter() {
-  const pass = process.env.SMTP_PASS;
+  const pass = process.env.SMTP_PASS?.replace(/\s/g, "");
   if (!pass) return null;
   if (!transporter) {
     const port = Number(process.env.SMTP_PORT || 465);
@@ -19,7 +19,11 @@ function getTransporter() {
       host: process.env.SMTP_HOST || "smtp.gmail.com",
       port,
       secure: port === 465,
-      auth: { user: process.env.SMTP_USER || DEFAULT_SENDER, pass },
+      requireTLS: port !== 465,
+      connectionTimeout: 8000,
+      greetingTimeout: 8000,
+      socketTimeout: 12000,
+      auth: { user: SENDER_EMAIL, pass },
     });
   }
   return transporter;
@@ -71,13 +75,13 @@ export async function sendEmail(to: string | undefined | null, content: MailCont
   if (!to || !EMAIL_PATTERN.test(to)) return false;
   const transport = getTransporter();
   if (!transport) {
-    console.warn("[email] SMTP_PASS belum diatur, email tidak dikirim:", content.subject);
+    console.warn("[email] SMTP belum dikonfigurasi; email tidak dikirim.");
     return false;
   }
   try {
     const { html, text } = render(content);
     await transport.sendMail({
-      from: `"SIAGA DATA" <${process.env.SMTP_USER || DEFAULT_SENDER}>`,
+      from: `"SIAGA DATA" <${SENDER_EMAIL}>`,
       to,
       subject: `[SIAGA DATA] ${content.subject}`,
       html,
@@ -85,7 +89,7 @@ export async function sendEmail(to: string | undefined | null, content: MailCont
     });
     return true;
   } catch (error) {
-    console.error("[email] Gagal mengirim email:", (error as Error).message);
+    console.error("[email] Pengiriman email gagal.");
     return false;
   }
 }

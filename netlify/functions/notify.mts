@@ -18,7 +18,7 @@ export default async (req: Request, context: Context) => {
     const to = residentEmail(user);
     if (!to) return json(200, { sent: false, reason: "NO_EMAIL" });
     const tone = body.tone === "warning" ? "warning" : body.tone === "success" ? "success" : "info";
-    context.waitUntil(sendEmail(to, {
+    const sent = await sendEmail(to, {
       subject: title,
       heading: title,
       intro: `Halo ${user!.name}, notifikasi berikut baru saja muncul di aplikasi SIAGA DATA Anda.`,
@@ -29,8 +29,8 @@ export default async (req: Request, context: Context) => {
       ],
       note: "Email ini dikirim otomatis agar Anda tidak melewatkan notifikasi apa pun dari SIAGA DATA.",
       tone,
-    }));
-    return json(202, { sent: true });
+    });
+    return sent ? json(200, { sent: true }) : json(503, { sent: false, reason: "EMAIL_UNAVAILABLE" });
   } catch (error) {
     console.error(error);
     return fail(500, "Terjadi kesalahan pada server.");
